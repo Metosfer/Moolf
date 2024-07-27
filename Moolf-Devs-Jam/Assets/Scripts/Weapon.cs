@@ -6,26 +6,46 @@ public class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletForce = 20f;
-    public float range = 100f;  // Raycast mesafesi
-
+    public float range = 100f;
+    public AudioSource silahSesi;
+    public AudioSource mermiDegistirme;
+    public ParticleSystem silahAtesi;
     public int maxAmmo = 30;
     public int reserveAmmo = 120;
     private int currentAmmo;
     private int totalReserveAmmo;
-
     public float fireRate = 0.5f;
     private float nextTimeToFire = 0f;
+    public TextMeshProUGUI ammoText;
 
-    public TextMeshProUGUI ammoText;  // TextMeshPro için uygun bileþen türü
-
-    void Start()
+    private void Start()
     {
         currentAmmo = maxAmmo;
         totalReserveAmmo = reserveAmmo;
         UpdateAmmoText();
+        InitializeComponents();
     }
 
-    void Update()
+    private void InitializeComponents()
+    {
+        if (silahSesi == null)
+            silahSesi = GetComponent<AudioSource>();
+
+        if (silahAtesi == null)
+            silahAtesi = GetComponentInChildren<ParticleSystem>();
+
+        if (mermiDegistirme == null)
+            mermiDegistirme = GetComponent<AudioSource>();
+
+        // Particle system'in oyun boyunca silinmemesini saðla
+        if (silahAtesi != null)
+        {
+            DontDestroyOnLoad(silahAtesi.gameObject);
+            silahAtesi.Stop();
+        }
+    }
+
+    private void Update()
     {
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire && currentAmmo > 0)
         {
@@ -35,39 +55,46 @@ public class Weapon : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            mermiDegistirme.Play();
             Reload();
         }
     }
 
-    void Shoot()
+    private void Shoot()
     {
-        // Raycast ile hedef noktasýný bul
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        Vector3 targetPoint = ray.origin + ray.direction * range;
+        Vector3 targetPoint = ray.GetPoint(range);
 
         if (Physics.Raycast(ray, out hit, range))
-        {
             targetPoint = hit.point;
-        }
 
-        // Mermi prefab'ýný ateþ konumundan instantiate ediyoruz
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-
-        // Mermiyi hedef noktasýna doðru hareket ettiriyoruz
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         Vector3 direction = (targetPoint - firePoint.position).normalized;
         rb.AddForce(direction * bulletForce, ForceMode.VelocityChange);
 
-        // Mermiyi 5 saniye sonra yok ediyoruz
         Destroy(bullet, 5f);
+
+        PlayShootEffects();
 
         currentAmmo--;
         UpdateAmmoText();
     }
 
-    void Reload()
+    private void PlayShootEffects()
+    {
+        if (silahSesi != null)
+            silahSesi.Play();
+
+        if (silahAtesi != null)
+        {
+            if (!silahAtesi.isPlaying)
+                silahAtesi.Play();
+        }
+    }
+
+    private void Reload()
     {
         if (totalReserveAmmo <= 0 || currentAmmo == maxAmmo)
             return;
@@ -83,10 +110,11 @@ public class Weapon : MonoBehaviour
             currentAmmo += totalReserveAmmo;
             totalReserveAmmo = 0;
         }
+
         UpdateAmmoText();
     }
 
-    void UpdateAmmoText()
+    private void UpdateAmmoText()
     {
         ammoText.text = $"{currentAmmo}/{totalReserveAmmo}";
     }
