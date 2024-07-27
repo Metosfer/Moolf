@@ -1065,6 +1065,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833748916}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &996956187 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1174074935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1144994902
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,6 +1319,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1365356963}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 92c77c32ad5140a4db1fd57625e9710a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 996956187}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 92c77c32ad5140a4db1fd57625e9710a,
         type: 3}
@@ -1327,6 +1337,74 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2064828264}
   m_SourcePrefab: {fileID: 100100000, guid: 92c77c32ad5140a4db1fd57625e9710a, type: 3}
+--- !u!1001 &1174074935
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2064828261}
+    m_Modifications:
+    - target: {fileID: 3508489564144450909, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_Name
+      value: WFX_BImpact Sand (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010453996710088968, guid: b03edd5bed52c074ea0f8401703e52e8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b03edd5bed52c074ea0f8401703e52e8, type: 3}
 --- !u!1 &1216123196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2341,6 +2419,11 @@ MonoBehaviour:
   playerBody: {fileID: 1970079077}
   minXRotation: -90
   maxXRotation: 50
+  recoilX: 10
+  recoilY: 2
+  recoilZ: 0.35
+  snappiness: 6
+  returnSpeed: 2
 --- !u!114 &1823688470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2951,14 +3034,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f2fdc3caeacc84cac76f737f963606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 5201840130847477822, guid: 6d17c8aba04f6d842a89cc5037cc7479,
+  bulletPrefab: {fileID: 7044436312332681860, guid: 2db8e4f680a7140499e09c2c5e7cec1d,
     type: 3}
   firePoint: {fileID: 1365356963}
   bulletForce: 60
   range: 1000
   silahSesi: {fileID: 2064828263}
   mermiDegistirme: {fileID: 2064828264}
-  silahAtesi: {fileID: 6294039278959636179, guid: fd61e0d3970433a41814011b85f690e8,
+  silahAtesiPrefab: {fileID: 2244834472262243299, guid: b03edd5bed52c074ea0f8401703e52e8,
     type: 3}
   maxAmmo: 30
   reserveAmmo: 120

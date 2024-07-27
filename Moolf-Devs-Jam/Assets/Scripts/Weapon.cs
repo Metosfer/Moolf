@@ -9,7 +9,9 @@ public class Weapon : MonoBehaviour
     public float range = 100f;
     public AudioSource silahSesi;
     public AudioSource mermiDegistirme;
-    public ParticleSystem silahAtesi;
+    public ParticleSystem silahAtesiPrefab;
+    private ParticleSystem silahAtesiInstance;
+
     public int maxAmmo = 30;
     public int reserveAmmo = 120;
     private int currentAmmo;
@@ -31,18 +33,11 @@ public class Weapon : MonoBehaviour
         if (silahSesi == null)
             silahSesi = GetComponent<AudioSource>();
 
-        if (silahAtesi == null)
-            silahAtesi = GetComponentInChildren<ParticleSystem>();
+        if (silahAtesiPrefab == null)
+            silahAtesiPrefab = GetComponentInChildren<ParticleSystem>();
 
         if (mermiDegistirme == null)
             mermiDegistirme = GetComponent<AudioSource>();
-
-        // Particle system'in oyun boyunca silinmemesini saðla
-        if (silahAtesi != null)
-        {
-            DontDestroyOnLoad(silahAtesi.gameObject);
-            silahAtesi.Stop();
-        }
     }
 
     private void Update()
@@ -87,10 +82,11 @@ public class Weapon : MonoBehaviour
         if (silahSesi != null)
             silahSesi.Play();
 
-        if (silahAtesi != null)
+        if (silahAtesiPrefab != null)
         {
-            if (!silahAtesi.isPlaying)
-                silahAtesi.Play();
+            ParticleSystem tempMuzzle = Instantiate(silahAtesiPrefab, firePoint.position, firePoint.rotation);
+            tempMuzzle.Play();
+            Destroy(tempMuzzle.gameObject, tempMuzzle.main.duration);
         }
     }
 
